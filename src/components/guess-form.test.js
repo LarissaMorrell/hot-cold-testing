@@ -9,4 +9,14 @@ describe('<GuessForm />', () => {
     shallow(<GuessForm />);
   });
 
+  it('Should fire the onGuess callback when the form is submitted', () => {
+        const callback = jest.fn();
+        const wrapper = mount(<GuessForm onGuess={callback} />);
+        const value = '63';
+        
+        wrapper.find('input[type="text"]').node.value = value;
+        wrapper.simulate('submit');
+        expect(callback).toHaveBeenCalledWith(value);
+    });
+
 });
