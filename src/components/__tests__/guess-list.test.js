@@ -1,7 +1,7 @@
 import React from 'react';
 import {shallow, mount} from 'enzyme';
 
-import GuessList from './guess-list';
+import GuessList from '../guess-list';
 
 describe('<GuessList />', () => {
 
@@ -15,9 +15,14 @@ describe('<GuessList />', () => {
   });
 
   it('Renders the guess box with guesses', () => {
-    const guesses = [23];
+    const guesses = [23, 56, 88, 30];
     const wrapper = shallow(<GuessList guesses={guesses} />);
 
-    // expect(wrapper.contains(<ul><li>{guesses[0]}</li></ul>)).toEqual(true);
+    for(let guess of guesses){
+      expect(wrapper.contains(<li>{guess}</li>)).toEqual(true);
+    }
+
+    expect(wrapper.find('ul').children().length).toEqual(guesses.length);
+
   });
 });

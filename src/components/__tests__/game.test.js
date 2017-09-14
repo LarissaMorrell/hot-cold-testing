@@ -1,7 +1,7 @@
 import React from 'react';
 import {shallow, mount} from 'enzyme';
 
-import Game from './game';
+import Game from '../game';
 
 describe('<Game />', () => {
   let seedGuesses = [];
@@ -34,19 +34,33 @@ describe('<Game />', () => {
   //
   // });
   //
-  // it('Resets state for new game', () => {
-  //
-  // });
+  it('Resets state for new game', () => {
+    const wrapper = shallow(<Game />);
+    wrapper.setState({
+      guesses: [43, 23, 1, 8],
+      feedback: "You're bad at this",
+      correctAnswer: 80
+    });
+
+    const instance = wrapper.instance();
+    instance.newGame();
+    expect(wrapper.state('guesses')).toEqual([]);
+
+    expect(wrapper.state('feedback')).toEqual("Make your guess!");
+  });
 
   //when there is a guess the feedback is updated in state
-  // it('Can add a guess', () => {
-  //   const wrapper = shallow(<Game />);
-  //   const instance = wrapper.instance();
-  //   instance.guess(36);
-  //   console.log("guess", wrapper.state);
-  //   expect(wrapper.state('guesses').length.toEqual(1));
-  //   // expect(wrapper.state('guesses').toEqual(testGuesses));
-  // });
+  it('Can add a guess', () => {
+    const wrapper = shallow(<Game />);
+    wrapper.setState({
+      correctAnswer: 10
+    });
+    const instance = wrapper.instance();
+    instance.guess(36);
+    expect(wrapper.state('guesses')).toEqual([36]);
+
+    expect(wrapper.state('feedback')).toEqual("You're Warm");
+  });
 
   //when there is a guess it is added to guess[] in state
 
